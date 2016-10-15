@@ -1,0 +1,2187 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule" xmlns:re="http://purl.org/atompub/rank/1.0">
+    <title type="text">Active questions tagged c++ - Stack Overflow</title>
+    <link rel="self" href="http://stackoverflow.com/feeds/tag/c++" type="application/atom+xml" />
+    <link rel="alternate" href="http://stackoverflow.com/questions/tagged/?tagnames=c%2b%2b&amp;sort=active" type="text/html" />
+    <subtitle>most recent 30 from stackoverflow.com</subtitle>
+    <updated>2016-10-04T22:59:32Z</updated>
+    <id>http://stackoverflow.com/feeds/tag/c++</id>
+    <creativeCommons:license>http://www.creativecommons.org/licenses/by-sa/3.0/rdf</creativeCommons:license>
+    <entry>
+        <id>http://stackoverflow.com/q/39858991</id>
+        <re:rank scheme="http://stackoverflow.com">-2</re:rank>
+        <title type="text">Strange result with RegQueryValueEx</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="c" />
+            <category scheme="http://stackoverflow.com/tags" term="winapi" />
+        <author>
+            <name>Mirks</name>
+            <uri>http://stackoverflow.com/users/6922453</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39858991/strange-result-with-regqueryvalueex" />
+        <published>2016-10-04T18:06:30Z</published>
+        <updated>2016-10-04T22:57:37Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I have encountered a strange problem with &lt;code&gt;RegQueryValueEx()&lt;/code&gt;.  I am using the following code to read a string from the Registry:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DLLEXPORT wchar_t *_cdecl getFSXpath() {
+    HKEY hKey = 0;
+    DWORD dwType = 0;
+    wchar_t AppPath[255];
+    DWORD dwBufSize = sizeof(AppPath);
+    const char* subkey = &quot;Software\\Microsoft\\Microsoft Games\\Flight Simulator\\10.0&quot;;
+    if( RegOpenKey(HKEY_CURRENT_USER,subkey,&amp;amp;hKey) == ERROR_SUCCESS) {
+        dwType = REG_SZ;
+        if ( RegQueryValueEx(hKey,&quot;AppPath&quot;,0, &amp;amp;dwType, (LPBYTE)&amp;amp;AppPath, &amp;amp;dwBufSize) != ERROR_SUCCESS)
+            RegCloseKey(hKey);
+    }
+    else
+        RegCloseKey(hKey);
+
+    return AppPath;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The project is using a multi-byte character set.&lt;/p&gt;
+
+&lt;p&gt;The code works just fine on most user&#39;s computers.  However, in one particular case, the user has the following string in their Registry , which I have confirmed to be entered correctly:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;F:\Program files\Microsoft games\Microsoft Flight Simulator X\&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;and is set as &lt;code&gt;REG_SZ&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;But strangely, in this case the value being returned is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;F:\Program fq!!+w{zA&amp;amp;H&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Why is it that the code is working fine in most cases, yet on one person&#39;s computer I get a strange result?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39860880</id>
+        <re:rank scheme="http://stackoverflow.com">-2</re:rank>
+        <title type="text">How to get the highest range from low value minus high value within an array of numbers?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="arrays" />
+        <author>
+            <name>OOP</name>
+            <uri>http://stackoverflow.com/users/6419173</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39860880/how-to-get-the-highest-range-from-low-value-minus-high-value-within-an-array-of" />
+        <published>2016-10-04T20:06:31Z</published>
+        <updated>2016-10-04T22:56:17Z</updated>
+        <summary type="html">
+
+
+            &lt;h1&gt;Idea&lt;/h1&gt;
+
+&lt;p&gt;So we have a sales person who comes to a shop that has an array of numbers of products with different prices.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; prices{28, 18, 20, 26, 24, 12};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1&gt;Problem&lt;/h1&gt;
+
+&lt;p&gt;We need this sales person to select the product with the lowest value first and the highest value after the index with the lowest value, but also putting in mind that the lowest value is not the last element in the array (however the highest value can be in the last element). So our lowest value will be 18 and sell it with the highest value, which will be 26.&lt;/p&gt;
+
+&lt;p&gt;But the tricky part here is that it needs to have the maximum profit.
+So for example 26 is the highest value, and 26 - 18 = 8.&lt;/p&gt;
+
+&lt;p&gt;But there will be instances where the highest - lowest != to maximum profit.&lt;/p&gt;
+
+&lt;h1&gt;Task&lt;/h1&gt;
+
+&lt;p&gt;How can we make sure that the maximum profit is taken out of the array above?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  for (int i = 0; i &amp;lt; vec.size(); i++) {
+    if ((vec[i] &amp;lt;= _minVal)) {
+      _newMinIndex = i;
+      if (_newMinIndex == vec.size() - 1) {
+        _minVal = 0;
+        _newMinIndex = 0;
+      } else {
+        _minVal = vec[i];
+      }
+    }
+  }
+
+  for (int i = 0; i &amp;lt; vec.size(); i++) {
+    max = vec[_newMinIndex];
+    min = vec[_newMinIndex];
+    increment = _newMinIndex;
+    while (increment &amp;lt; vec.size()) {
+      if (vec[increment] &amp;gt; max) {
+        max = vec[increment];
+        maxIndex = increment;
+      }
+      increment++;
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I have two for loops, the first loop gets the minimum value first, and the second for loop gets the highest value from the index of minium plus till the end of the array.&lt;/p&gt;
+
+&lt;p&gt;This will work, but it doesnt take into account with the maximum profit.&lt;/p&gt;
+
+&lt;p&gt;How can we implement this.&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39183340</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">iOS Camera Problems</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="ios" />
+            <category scheme="http://stackoverflow.com/tags" term="opencv" />
+            <category scheme="http://stackoverflow.com/tags" term="camera" />
+            <category scheme="http://stackoverflow.com/tags" term="image-recognition" />
+        <author>
+            <name>NyonX</name>
+            <uri>http://stackoverflow.com/users/6765039</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39183340/ios-camera-problems" />
+        <published>2016-08-27T16:30:29Z</published>
+        <updated>2016-10-04T22:49:21Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;The camera does not launch when the OpenCV code runs and camera remains blank until the code is removed.&lt;/p&gt;
+
+&lt;p&gt;I am currently trying to make the camera draw a square over the person&#39;s head but, OpenCV is giving me errors when I START the camera.&lt;/p&gt;
+
+&lt;p&gt;This is what the console says when it is launched:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&quot;snippet&quot; data-lang=&quot;js&quot; data-hide=&quot;false&quot; data-console=&quot;true&quot; data-babel=&quot;false&quot;&gt;
+&lt;div class=&quot;snippet-code&quot;&gt;
+&lt;pre class=&quot;snippet-code-html lang-html prettyprint-override&quot;&gt;&lt;code&gt;2016-08-27 11:41:03.912 Detect 2[1168:446681] camera available: YES
+2016-08-27 11:41:04.007 Detect 2[1168:446681] deviceOrientationDidChange: 0
+2016-08-27 11:41:04.010 Detect 2[1168:446681] deviceOrientationDidChange: 1
+2016-08-27 11:41:04.031 Detect 2[1168:446681] deviceOrientationDidChange: 5
+2016-08-27 11:41:07.427 Detect 2[1168:446681] [Camera] device connected? YES
+2016-08-27 11:41:07.428 Detect 2[1168:446681] [Camera] device position back
+2016-08-27 11:41:07.442 Detect 2[1168:446681] WARNING: -[&amp;lt;AVCaptureConnection: 0x47e30d50&amp;gt; isVideoMinFrameDurationSupported] is deprecated.  Please use AVCaptureDevice activeFormat.videoSupportedFrameRateRanges
+2016-08-27 11:41:07.442 Detect 2[1168:446681] WARNING: -[&amp;lt;AVCaptureConnection: 0x47e30d50&amp;gt; setVideoMinFrameDuration:] is deprecated.  Please use AVCaptureDevice setActiveVideoMinFrameDuration
+2016-08-27 11:41:07.443 Detect 2[1168:446681] WARNING: -[&amp;lt;AVCaptureConnection: 0x47e30d50&amp;gt; isVideoMaxFrameDurationSupported] is deprecated.  Please use AVCaptureDevice activeFormat.videoSupportedFrameRateRanges
+2016-08-27 11:41:07.443 Detect 2[1168:446681] WARNING: -[&amp;lt;AVCaptureConnection: 0x47e30d50&amp;gt; setVideoMaxFrameDuration:] is deprecated.  Please use AVCaptureDevice setActiveVideoMaxFrameDuration
+2016-08-27 11:41:07.447 Detect 2[1168:446681] layout preview layer
+2016-08-27 11:41:07.448 Detect 2[1168:446681] [Camera] created AVCaptureVideoDataOutput at 30 FPS
+OpenCV Error: Bad argument (Unknown array type) in cvarrToMat, file /Volumes/Linux/builds/2_4_iOS-mac/opencv/modules/core/src/matrix.cpp, line 698
+libc++abi.dylib: terminating with uncaught exception of type cv::Exception: /Volumes/Linux/builds/2_4_iOS-mac/opencv/modules/core/src/matrix.cpp:698: error: (-5) Unknown array type in function cvarrToMat
+
+(lldb) &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;I am using OpenCV 2.4.13 and this is my ViewController.mm:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&quot;snippet&quot; data-lang=&quot;js&quot; data-hide=&quot;false&quot; data-console=&quot;true&quot; data-babel=&quot;false&quot;&gt;
+&lt;div class=&quot;snippet-code&quot;&gt;
+&lt;pre class=&quot;snippet-code-html lang-html prettyprint-override&quot;&gt;&lt;code&gt;#import &quot;ViewController.h&quot;
+
+NSString* const faceCascadeFilename = @&quot;haarcascade_frontalface_alt2&quot;;
+const int HaarOptions = CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_DO_ROUGH_SEARCH;
+
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+
+@synthesize videoCamera;
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.videoCamera = [[CvVideoCamera alloc] initWithParentView:imageView];
+    self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
+    self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
+    self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
+    self.videoCamera.defaultFPS = 30;
+    self.videoCamera.grayscaleMode = NO;
+    self.videoCamera.delegate = self;
+
+    NSString* faceCascadePath = [[NSBundle mainBundle] pathForResource:faceCascadeFilename ofType:@&quot;xml&quot;];
+    faceCascade.load([faceCascadePath UTF8String]);
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Protocol CvVideoCameraDelegate
+
+#ifdef __cplusplus
+#endif
+- (void)processImage:(Mat&amp;amp;)image;
+{
+         Mat grayscaleFrame;
+    cvCvtColor(&amp;amp;image, &amp;amp;grayscaleFrame, CV_BGR2GRAY);
+    cvEqualizeHist(&amp;amp;grayscaleFrame, &amp;amp;grayscaleFrame);
+
+    std::vector&amp;lt;cv::Rect&amp;gt; faces;
+    faceCascade.detectMultiScale(grayscaleFrame, faces, 1.1, 2, HaarOptions, cv::Size(60, 60));
+
+    for (int i = 0; i &amp;lt; faces.size(); i++)
+    {
+        cv::Point pt1(faces[i].x + faces[i].width, faces[i].y + faces[i].height);
+        cv::Point pt2(faces[i].x, faces[i].y);
+
+         cv::rectangle(image, pt1, pt2, cvScalar(0, 255, 0, 0), 1, 8 ,0);
+    }
+}
+
+#pragma mark - UI Actions
+
+- (IBAction)startCamera:(id)sender
+{
+    [self.videoCamera start];
+}
+
+- (IBAction)stopCamera:(id)sender
+{
+    [self.videoCamera stop];
+}
+@end&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The problem is at the Mat grayscale frame and the camera works fine when I comment out that section. I searched on google and I took the advice to upgrade to the new Framework which removed the crashing problem but now, I have this problem. I do not know where it gets the path file /Volumes/. I tried searching the project but there is no results. How can I start up the camera with the code running with the intention to track faces?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862932</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">How to call the function in derived class to process handle_post?(C++ REST SDK)</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="rest" />
+            <category scheme="http://stackoverflow.com/tags" term="casablanca" />
+        <author>
+            <name>firstaccount</name>
+            <uri>http://stackoverflow.com/users/6768541</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862932/how-to-call-the-function-in-derived-class-to-process-handle-postc-rest-sdk" />
+        <published>2016-10-04T22:48:39Z</published>
+        <updated>2016-10-04T22:48:39Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;in my base class, this is a public non-static member function:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void BaseClass::SetPorcessMethod()
+{
+     //do something
+    Listener.support(methods::POST, this-&amp;gt;HandlePost);
+    //do something
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the function above, &lt;code&gt;Listener&lt;/code&gt; is a static member variable.
+Function &lt;code&gt;HandlePost&lt;/code&gt; is a pure virtual function which is implemented by all derived classes. I want to use &lt;code&gt;this&lt;/code&gt; pointer to call different &lt;code&gt;HandlePost&lt;/code&gt; from different derived class.
+Like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class BaseClass
+{
+ public:
+   static http_listener listener;
+   void SetPorcessMethod();
+   virtual HandlePost((http_request request) = 0;
+   /*listener is init in constructor , not display here*/
+}
+ class Derived2:public BaseClass
+{
+  void HandlePost(http_request request);
+}
+class Derived1:public BaseClass
+{
+  void HandlePost(http_request request);
+}
+
+Derived1 instance1;
+instance1.SetPorcessMethod();
+Derived2 instance2;
+instance2.SetPorcessMethod();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However, it displays&lt;code&gt;BaseClass::HandlePost:function call missing argument list use &amp;amp;BaseClass::HandlePost:function to create a pointer to member&lt;/code&gt;.
+How could I handle this issue?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862923</id>
+        <re:rank scheme="http://stackoverflow.com">-2</re:rank>
+        <title type="text">How do I create a reference to an ostream object in c#?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c#" />
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="decorator" />
+        <author>
+            <name>K. Parsa</name>
+            <uri>http://stackoverflow.com/users/6401876</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862923/how-do-i-create-a-reference-to-an-ostream-object-in-c" />
+        <published>2016-10-04T22:48:05Z</published>
+        <updated>2016-10-04T22:48:05Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;This code is in c++. We are doing the decorator pattern.
+This code creates a ostream object that is referenced called sink. He then is able to call sink when he wants to write.&lt;/p&gt;
+
+&lt;p&gt;I cannot find out how to do this in c#. Any idea?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;template&amp;lt;typename T&amp;gt;
+class StreamOutput : public Output&amp;lt;T&amp;gt; {
+    std::ostream&amp;amp; sink;
+public:
+    explicit StreamOutput(std::ostream&amp;amp; stream) : sink(stream) {}
+    void write(const T&amp;amp; t) {
+        sink &amp;lt;&amp;lt; t;
+    }
+    void writeString(const std::string&amp;amp; s) {
+       sink &amp;lt;&amp;lt; s;
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862911</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">QRemoteObject with QDomDocument [QtRO]</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="qt" />
+        <author>
+            <name>user2018761</name>
+            <uri>http://stackoverflow.com/users/2018761</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862911/qremoteobject-with-qdomdocument-qtro" />
+        <published>2016-10-04T22:46:45Z</published>
+        <updated>2016-10-04T22:46:45Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;Can I use QDomDocument signal/slot in REPC generated replicas ?
+It&#39;s question about &lt;a href=&quot;https://github.com/qtproject/playground-qtremoteobjects/&quot; rel=&quot;nofollow&quot; title=&quot;QtRO&quot;&gt;QtRO&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I have tested QtRemoteObject with simple example, but as soon as I add QDomDocument to .rep file I get error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/Qt/5.7/android_armv7/include/QtCore/qmetatype.h: In instantiation of &#39;constexpr int qMetaTypeId() [with T = QDomDocument]&#39;:
+/Qt/5.7/android_armv7/include/QtCore/qmetatype.h:1752:27:   required from &#39;constexpr int qRegisterMetaType() [with T = QDomDocument]&#39;
+rep_pingpong_replica.h:32:41:   required from here
+/Qt/5.7/android_armv7/include/QtCore/qglobal.h:746:47: error: static assertion failed: Type is not registered, please use the Q_DECLARE_METATYPE macro to make it known to Qt&#39;s meta-object system
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;.rep file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;QDomDocument&amp;gt;
+
+class PingPong {
+    SLOT(void ping(QString msg));
+    SLOT(void pingXml(QDomDocument xml));
+    SIGNAL(pong(QString msg));
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;.rep file will not permit Q_DECLARE_METATYPE
+In my app I&#39;m just using
+qRegisterMetaType(&quot;QDomDocument&quot;);
+for signal/slot, but I don&#39;t know how to do it with QtRemoteObject ?&lt;/p&gt;
+
+&lt;p&gt;Best Regards&lt;/p&gt;
+
+&lt;p&gt;Marek&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862899</id>
+        <re:rank scheme="http://stackoverflow.com">-1</re:rank>
+        <title type="text">Dijkstra algorithm, and a segmentation fault?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+        <author>
+            <name>inle</name>
+            <uri>http://stackoverflow.com/users/6923496</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862899/dijkstra-algorithm-and-a-segmentation-fault" />
+        <published>2016-10-04T22:45:15Z</published>
+        <updated>2016-10-04T22:45:15Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;What I really need is the way itself, on which you can reach the desired vertex.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DynamicIntStack dijk(int A, int B, int** adjmatrix){
+ int dist[N];
+ bool vis[N];
+ int pre[N];
+ DynamicIntStack way;
+ for(int i=0; i&amp;lt;N; i++){
+     pre[i]=0;
+ }
+
+ for(int i = 0; i &amp;lt; N; ++i){
+     dist[i] = 999;
+ }
+ dist[A] = 0;
+
+ for(int i = 0; i &amp;lt; N; ++i){
+     int cur = -1;
+     for(int j = 0; j &amp;lt; N; ++j){
+         if (vis[j]) continue;
+         if (cur == -1 || dist[j] &amp;lt; dist[cur]){
+             cur = j;
+         }
+     }
+
+     vis[cur] = true;
+     for(int j = 0; j &amp;lt; N; ++j){
+         int path = dist[cur] + adjmatrix[cur][j];
+         if (path &amp;lt; dist[j])
+         {
+             dist[j] = path;
+             pre[j] = cur;
+         }
+     }
+ }
+ way.push(B);
+ int a=pre[B];
+ do
+ {
+     way.push(a);
+     a=pre[a];
+
+ }
+ while(a!=0);
+ if(way.top() != A)
+ {
+    way.push(A);
+ }
+ return way;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}
+For the first couple of cycles it runs well, then I get a segfault, because the cur=-1, when I set the path variable. This code worked well, when I used the built-in STL structures, but now, that i would like to implement my own, I keep getting this error.
+Any idea?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862751</id>
+        <re:rank scheme="http://stackoverflow.com">-1</re:rank>
+        <title type="text">C++: How do I subtract two integers from different classes?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+        <author>
+            <name>Pablo Alfaro</name>
+            <uri>http://stackoverflow.com/users/6896780</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862751/c-how-do-i-subtract-two-integers-from-different-classes" />
+        <published>2016-10-04T22:30:17Z</published>
+        <updated>2016-10-04T22:43:40Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;&lt;strong&gt;Before I say anything, I want to clarify I am a beginner programmer and have only spent about 2 months on C++.&lt;/strong&gt; I&#39;ve had this problem for a while now and I can&#39;t seem to find the answer! &lt;strong&gt;To make it clear, I am not trying to optimize this &quot;game&quot;. I am simply trying to practice my classes.&lt;/strong&gt; Here is the example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+using namespace std;
+
+int main() {
+Health = Health - dmgNinja;
+cout &amp;lt;&amp;lt; Health &amp;lt;&amp;lt; endl;
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In a separate class header:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Enemy {
+public:
+    void dmgNinja();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In a separate class cpp:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int dmgNinja = 42;
+
+namespace std {
+void Enemy::dmgNinja() {
+    cout &amp;lt;&amp;lt; dmgNinja &amp;lt;&amp;lt; endl;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In a separate class header:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Bandit {
+public:
+    void Health();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In a separate class cpp:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int Health = 100;
+
+namespace std {
+void Bandit::Health() {
+    cout &amp;lt;&amp;lt; Health &amp;lt;&amp;lt; endl;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In short I want to know how to subtract two variables from different classes then print it out in the main file and making sure what ever variable was changed stays changed. Any help would be appreciated tremendously! &lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/236129</id>
+        <re:rank scheme="http://stackoverflow.com">1927</re:rank>
+        <title type="text">Split a string in C++?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="string" />
+            <category scheme="http://stackoverflow.com/tags" term="split" />
+            <category scheme="http://stackoverflow.com/tags" term="stdstring" />
+            <category scheme="http://stackoverflow.com/tags" term="c++-faq" />
+        <author>
+            <name>Ashwin Nanjappa</name>
+            <uri>http://stackoverflow.com/users/1630</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/236129/split-a-string-in-c" />
+        <published>2008-10-25T08:58:21Z</published>
+        <updated>2016-10-04T22:40:13Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;What&#39;s the most elegant way to split a string in C++? The string can be assumed to be composed of words separated by whitespace.&lt;/p&gt;
+
+&lt;p&gt;(Note that I&#39;m not interested in C string functions or that kind of character manipulation/access. Also, please give precedence to elegance over efficiency in your answer.)&lt;/p&gt;
+
+&lt;p&gt;The best solution I have right now is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;sstream&amp;gt;
+#include &amp;lt;string&amp;gt;
+
+using namespace std;
+
+int main()
+{
+    string s(&quot;Somewhere down the road&quot;);
+    istringstream iss(s);
+
+    do
+    {
+        string sub;
+        iss &amp;gt;&amp;gt; sub;
+        cout &amp;lt;&amp;lt; &quot;Substring: &quot; &amp;lt;&amp;lt; sub &amp;lt;&amp;lt; endl;
+    } while (iss);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862851</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">GDB not giving details at segfault cygwin</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="gdb" />
+            <category scheme="http://stackoverflow.com/tags" term="cygwin" />
+        <author>
+            <name>user3189177</name>
+            <uri>http://stackoverflow.com/users/3189177</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862851/gdb-not-giving-details-at-segfault-cygwin" />
+        <published>2016-10-04T22:39:38Z</published>
+        <updated>2016-10-04T22:39:38Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;So I am trying to debug a segfault in a C++ project for school. The project uses a makefile to compile. When I run the program under gdb (using cygwin) I get the segfault but when I try to use the &quot;l&quot; command to show the code I get different code than expected, and when I use &quot;frame&quot;, gdb only prints the name of the function instead of the code that last executed. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Program received signal SIGSEGV, Segmentation fault.
+0x000000010041570b in NodeCorrectness::eval(Alignment const&amp;amp;) ()
+(gdb) l
+1       /* advapi32.cc: Win32 replacement functions.
+2
+3       This file is part of Cygwin.
+4
+5       This software is a copyrighted work licensed under the terms of the
+6       Cygwin license.  Please consult the file &quot;CYGWIN_LICENSE&quot; for
+7       details. */
+8
+9       #include &quot;winsup.h&quot;
+10      #include &amp;lt;winioctl.h&amp;gt;
+(gdb) frame
+#0  0x000000010041570b in NodeCorrectness::eval(Alignment const&amp;amp;) ()
+(gdb)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So gdb does not let me see where exactly the segfault occurred. Any reason for this? &lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39861615</id>
+        <re:rank scheme="http://stackoverflow.com">-1</re:rank>
+        <title type="text">Failed to build plotutils with png 1.6.25 error: dereferencing pointer to incomplete type</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="png" />
+            <category scheme="http://stackoverflow.com/tags" term="graphics2d" />
+        <author>
+            <name>Kemin Zhou</name>
+            <uri>http://stackoverflow.com/users/2407363</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39861615/failed-to-build-plotutils-with-png-1-6-25-error-dereferencing-pointer-to-incomp" />
+        <published>2016-10-04T20:57:40Z</published>
+        <updated>2016-10-04T22:39:06Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;On my RedHat 7 Linux machine (gcc 4.8.3), I have png-dev (1.6.25) installed.&lt;br&gt;
+Trying to build the plotutils-2.6 (I checked it was last updated 2009).
+./configure successuful.  Problem at make step with error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gcc -DHAVE_CONFIG_H -I. -I.. -I./../include -DLIBPLOT -O2 -MT z_write.lo -MD -MP -MF .deps/z_write.Tpo -c z_write.c  -fPIC -DPIC -o .libs/z_write.o
+In file included from /usr/local/include/pngconf.h:50:0,
+                 from /usr/local/include/png.h:371,
+                 from z_write.c:43:
+z_write.c: In function &#39;_pl_z_maybe_output_image&#39;:
+z_write.c:167:22: error: dereferencing pointer to incomplete type
+   if (setjmp (png_ptr-&amp;gt;jmpbuf))
+                      ^
+z_write.c: In function &#39;_our_error_fn_stdio&#39;:
+z_write.c:447:19: error: dereferencing pointer to incomplete type
+   longjmp (png_ptr-&amp;gt;jmpbuf, 1);
+                   ^
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Question number 1: Is the plotutils library still actively maintained?  If not, is there an alternative for C++ programmers?&lt;/p&gt;
+
+&lt;p&gt;Do any of you encountered this problem before and fixed it? &lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39861204</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Why doesn&#39;t the vector change its elements?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="vector" />
+        <author>
+            <name>Fernanda Brum Lousada</name>
+            <uri>http://stackoverflow.com/users/2038186</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39861204/why-doesnt-the-vector-change-its-elements" />
+        <published>2016-10-04T20:28:47Z</published>
+        <updated>2016-10-04T22:38:41Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;Have a vector which contains pointers to a Student class. I need to selection sort the vector elements only changing the pointers, not the content. Here is my caller code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;StudentsFileReader* sfr = new StudentsFileReader(filepath);
+
+cout &amp;lt;&amp;lt; &quot;Calling sortPositionExchange...&quot; &amp;lt;&amp;lt; endl;
+
+SelectionSort::sortPositionExchange(&amp;amp;(sfr-&amp;gt;getStudents()));
+
+cout &amp;lt;&amp;lt; &quot;Done!&quot; &amp;lt;&amp;lt; endl;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here is my calling code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void SelectionSort::sortPositionExchange(vector&amp;lt;Student*&amp;gt;* students)
+{
+    int i, j, min, aux, tam = students-&amp;gt;size();
+
+    for (i = 0; i &amp;lt; tam - 1; i++)
+    {
+        min = i;
+        for (j = (i + 1); j &amp;lt; tam; j++)
+        {
+            if (students-&amp;gt;at(j)-&amp;gt;getCode() &amp;lt; students-&amp;gt;at(min)-&amp;gt;getCode())
+            {
+                min = j;
+            }
+        }
+
+        if (i != min)
+        {
+            Student* s = students-&amp;gt;at(i);
+            *(&amp;amp;students-&amp;gt;at(i)) = *(&amp;amp;students-&amp;gt;at(min));
+            *(&amp;amp;students-&amp;gt;at(min)) = s;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The selection sort executes perfectly inside sortPositionExchange function, but when it returns, the vector keeps unchanged.&lt;/p&gt;
+
+&lt;p&gt;What can I do to persist the changes between calling functions?&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862646</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">SFINAE-based template method specialization</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="sfinae" />
+        <author>
+            <name>Ivan Smirnov</name>
+            <uri>http://stackoverflow.com/users/2159939</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862646/sfinae-based-template-method-specialization" />
+        <published>2016-10-04T22:21:01Z</published>
+        <updated>2016-10-04T22:38:39Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I&#39;ve got a template class with some method, say, &lt;code&gt;foo&lt;/code&gt;. I want to specify a default behavior for this method for all POD types and introduce separate specializations for other types. (The real problem is more complicated but this is an MWE.) I tried to do it with SFINAE in a usual way.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;template&amp;lt;typename T&amp;gt;
+class C {
+public:
+    void foo(T t);
+};
+
+template&amp;lt;typename T&amp;gt;
+typename std::enable_if&amp;lt;
+        std::is_pod&amp;lt;T&amp;gt;::value,
+        void&amp;gt;::type
+C&amp;lt;T&amp;gt;::foo(T t) {
+    // do something
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Even with this code (i.e. not making any instances of C) I&#39;ve got an error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;prototype for ‘typename std::enable_if&amp;lt;std::is_pod&amp;lt;_Tp&amp;gt;::value, void&amp;gt;::type C&amp;lt;T&amp;gt;::foo(T)’ does not match any in class ‘C&amp;lt;T&amp;gt;’
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This seems strange for me, because either both method types are &lt;code&gt;void&lt;/code&gt; or the second one is eliminated by SFINAE.&lt;/p&gt;
+
+&lt;p&gt;What is more weird, if I replace a condition within &lt;code&gt;enable_if&lt;/code&gt; with &lt;code&gt;false&lt;/code&gt;, I got an error which shows that SFINAE doesn&#39;t work at all:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;error: ‘type’ in ‘struct std::enable_if&amp;lt;false, void&amp;gt;’ does not name a type
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where am I wrong?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/17645167</id>
+        <re:rank scheme="http://stackoverflow.com">17</re:rank>
+        <title type="text">Implementing SSE 4.2&#39;s CRC32C in software</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="polynomial-math" />
+            <category scheme="http://stackoverflow.com/tags" term="crc32" />
+        <author>
+            <name>LMS</name>
+            <uri>http://stackoverflow.com/users/1055881</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/17645167/implementing-sse-4-2s-crc32c-in-software" />
+        <published>2013-07-15T00:27:55Z</published>
+        <updated>2016-10-04T22:35:16Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;So I have a design which incorporates CRC32C checksums to ensure data hasn&#39;t been damaged. I decided to use CRC32C because I can have both a software version and a hardware-accelerated version if the computer the software runs on supports SSE 4.2&lt;/p&gt;
+
+&lt;p&gt;I&#39;m going by Intel&#39;s developer manual (vol 2A), which seems to provide the algorithm behind the &lt;code&gt;crc32&lt;/code&gt; instruction. However, I&#39;m having little luck. Intel&#39;s developer guide says the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;BIT_REFLECT32: DEST[31-0] = SRC[0-31]
+MOD2: Remainder from Polynomial division modulus 2
+
+TEMP1[31-0] &amp;lt;- BIT_REFLECT(SRC[31-0])
+TEMP2[31-0] &amp;lt;- BIT_REFLECT(DEST[31-0])
+TEMP3[63-0] &amp;lt;- TEMP1[31-0] &amp;lt;&amp;lt; 32
+TEMP4[63-0] &amp;lt;- TEMP2[31-0] &amp;lt;&amp;lt; 32
+TEMP5[63-0] &amp;lt;- TEMP3[63-0] XOR TEMP4[63-0]
+TEMP6[31-0] &amp;lt;- TEMP5[63-0] MOD2 0x11EDC6F41
+DEST[31-0]  &amp;lt;- BIT_REFLECT(TEMP6[31-0])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, as far as I can tell, I&#39;ve done everything up to the line starting &lt;code&gt;TEMP6&lt;/code&gt; correctly, but I think I may be either misunderstanding the polynomial division, or implementing it incorrectly. If my understanding is correct, &lt;code&gt;1 / 1 mod 2 = 1&lt;/code&gt;, &lt;code&gt;0 / 1 mod 2 = 0&lt;/code&gt;, and both divides-by-zero are undefined.&lt;/p&gt;
+
+&lt;p&gt;What I don&#39;t understand is how binary division with 64-bit and 33-bit operands will work. If &lt;code&gt;SRC&lt;/code&gt; is &lt;code&gt;0x00000000&lt;/code&gt;, and &lt;code&gt;DEST&lt;/code&gt; is &lt;code&gt;0xFFFFFFFF&lt;/code&gt;, &lt;code&gt;TEMP5[63-32]&lt;/code&gt; will be all set bits, while &lt;code&gt;TEMP5[31-0]&lt;/code&gt; will be all unset bits.&lt;/p&gt;
+
+&lt;p&gt;If I was to use the bits from &lt;code&gt;TEMP5&lt;/code&gt; as the numerator, there would be 30 divisions by zero as the polynomial &lt;code&gt;11EDC6F41&lt;/code&gt; is only 33 bits long (and so converting it to a 64-bit unsigned integer leaves the top 30 bits unset), and so the denominator is unset for 30 bits.&lt;/p&gt;
+
+&lt;p&gt;However, if I was to use the polynomial as the numerator, the bottom 32 bits of &lt;code&gt;TEMP5&lt;/code&gt; are unset, resulting in divides by zero there, and the top 30 bits of the result would be zero, as the top 30 bits of the numerator would be zero, as &lt;code&gt;0 / 1 mod 2 = 0&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Am I misunderstanding how this works? Just plain missing something? Or has Intel left out some crucial step in their documentation?&lt;/p&gt;
+
+&lt;p&gt;The reason I went to Intel&#39;s developer guide for what appeared to be the algorithm they used is because they used a 33-bit polynomial, and I wanted to make outputs identical, which didn&#39;t happen when I used the 32-bit polynomial &lt;code&gt;1EDC6F41&lt;/code&gt; (show below).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uint32_t poly = 0x1EDC6F41, sres, crcTable[256], data = 0x00000000;
+
+for (n = 0; n &amp;lt; 256; n++) {
+    sres = n;
+    for (k = 0; k &amp;lt; 8; k++)
+        sres = (sres &amp;amp; 1) == 1 ? poly ^ (sres &amp;gt;&amp;gt; 1) : (sres &amp;gt;&amp;gt; 1);
+    crcTable[n] = sres;
+}
+sres = 0xFFFFFFFF;
+
+for (n = 0; n &amp;lt; 4; n++) {
+    sres = crcTable[(sres ^ data) &amp;amp; 0xFF] ^ (sres &amp;gt;&amp;gt; 8);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above code produces &lt;code&gt;4138093821&lt;/code&gt; as an output, and the &lt;code&gt;crc32&lt;/code&gt; opcode produces &lt;code&gt;2346497208&lt;/code&gt; using the input &lt;code&gt;0x00000000&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Sorry if this is badly written or incomprehensible in places, it is rather late for me.&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39856131</id>
+        <re:rank scheme="http://stackoverflow.com">5</re:rank>
+        <title type="text">Overloading, variadic functions and bool type</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="c++11" />
+        <author>
+            <name>Michael Walz</name>
+            <uri>http://stackoverflow.com/users/898348</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39856131/overloading-variadic-functions-and-bool-type" />
+        <published>2016-10-04T15:21:06Z</published>
+        <updated>2016-10-04T22:31:12Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;Following program compiles fine and works as expected. Its output is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;1&lt;br&gt;
+  2&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+class Foo
+{
+public:
+  void Bar(const char* b, ...) { printf(&quot;1\n&quot;); };
+  void Bar(int a, const char* b, ...) { printf(&quot;2\n&quot;); };
+};
+
+int main()
+{
+  Foo foo1;
+  foo1.Bar(&quot;Test&quot;, &quot;xx&quot;, 1, 2);
+  foo1.Bar(1, &quot;xx&quot;, &quot;xx&quot;, 2, 2);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now if I change the &lt;code&gt;int&lt;/code&gt; parameter of the second &lt;code&gt;Bar&lt;/code&gt; function into &lt;code&gt;bool&lt;/code&gt; and &lt;code&gt;foo1.Bar(1, &quot;xx&quot;, &quot;xx&quot;, 2, 2);&lt;/code&gt; into &lt;code&gt;foo1.Bar(true, &quot;xx&quot;, &quot;xx&quot;, 2, 2);&lt;/code&gt;, then the following line won&#39;t compile and I get the error: &lt;code&gt;&#39;Foo::Bar&#39;: 2 overloads have similar conversions&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  foo1.Bar(&quot;Test&quot;, &quot;xx&quot;, 1, 2);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The whole program that doesn&#39;t compile:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+class Foo
+{
+public:
+  void Bar(const char* b, ...) { printf(&quot;1\n&quot;); };
+  void Bar(bool a, const char* b, ...) { printf(&quot;2\n&quot;); };
+};
+
+int main()
+{
+  Foo foo1;
+  foo1.Bar(&quot;Test&quot;, &quot;xx&quot;, 1, 2);  // error: &#39;Foo::Bar&#39;: 2 overloads have similar conversions
+  foo1.Bar(true, &quot;xx&quot;, &quot;xx&quot;, 2, 2);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I don&#39;t understand why there is an ambiguity in the second case.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;But if pointers implicitly convert to &lt;code&gt;bool&lt;/code&gt;, why does following compile ?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+class Foo
+{
+public:
+  void Bar(const char* b) { printf(&quot;1\n&quot;); };
+  void Bar(bool a) { printf(&quot;2\n&quot;); };
+};
+
+int main()
+{
+  Foo foo1;
+  foo1.Bar(&quot;Test&quot;);
+  foo1.Bar(true);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/6876788</id>
+        <re:rank scheme="http://stackoverflow.com">1</re:rank>
+        <title type="text">Faulting module path: C:\Windows\system32\KERNELBASE.dll</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term=".net-4.0" />
+            <category scheme="http://stackoverflow.com/tags" term="64bit" />
+        <author>
+            <name>Dewm Solo</name>
+            <uri>http://stackoverflow.com/users/4225</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/6876788/faulting-module-path-c-windows-system32-kernelbase-dll" />
+        <published>2011-07-29T17:29:25Z</published>
+        <updated>2016-10-04T22:25:05Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I have a .Net 4.0 C++ application that used to be built in 32bits. Obviously when running on a 64bits station I was having issues, therefore I started rebuilding everything in 64 bits. The whole project is converted as well as the libraries I had made for this in other project files. All references have been updated and everything compiles fine.&lt;/p&gt;
+
+&lt;p&gt;Once deployed to a 64bit station I now get the following errors in the windows event viewer:&lt;/p&gt;
+
+&lt;p&gt;Information : Windows Error Reporting&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Fault bucket , type 0
+Event Name: APPCRASH
+Response: Not available
+Cab Id: 0
+
+Problem signature:
+P1: EDI.exe
+P2: 0.0.0.0
+P3: 4e32e547
+P4: KERNELBASE.dll
+P5: 6.1.7601.17625
+P6: 4de88429
+P7: e0434352
+P8: 000000000000cacd
+P9:
+P10:
+
+Attached files:
+
+These files may be available here:
+C:\Users\developer\AppData\Local\Microsoft\Windows\WER\ReportArchive\AppCrash_EDI.exe_b14cfebcf86ccaf91a35dacab06a28cdf7277ba_17f14701
+
+Analysis symbol:
+Rechecking for solution: 0
+Report Id: c9983227-ba04-11e0-9299-002713d66c71
+Report Status: 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Error : Application Error&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Faulting application name: EDI.exe, version: 0.0.0.0, time stamp: 0x4e32e547
+Faulting module name: KERNELBASE.dll, version: 6.1.7601.17625, time stamp: 0x4de88429
+Exception code: 0xe0434352
+Fault offset: 0x000000000000cacd
+Faulting process id: 0x1704
+Faulting application start time: 0x01cc4e118bde9f1d
+Faulting application path: C:\Users\developer\Desktop\EDI_6.1.0.4160_x64\EDI_6.1.0.4160_x64\EDI.exe
+Faulting module path: C:\Windows\system32\KERNELBASE.dll
+Report Id: c9983227-ba04-11e0-9299-002713d66c71
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Error : .Net Runtime&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Application: EDI.exe
+Framework Version: v4.0.30319
+Description: The process was terminated due to an unhandled exception.
+Exception Info: System.IO.FileNotFoundException
+Stack:
+   at &amp;lt;Module&amp;gt;.main(System.String[])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When I run dependency walker on the executable, I get to see the executable listed in the modules and nothing else at all comes up.  I am kind of out of ideas at the moment and wondering if anyone can make something of this?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862694</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Compiling PyDasm for Python 3.5, Compilign Returns: fatal error C1510: Cannot load language resource clui.dll? [duplicate]</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="python-3.x" />
+            <category scheme="http://stackoverflow.com/tags" term="module" />
+            <category scheme="http://stackoverflow.com/tags" term="compilation" />
+        <author>
+            <name>Joe Clark</name>
+            <uri>http://stackoverflow.com/users/6917731</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862694/compiling-pydasm-for-python-3-5-compilign-returns-fatal-error-c1510-cannot-lo" />
+        <published>2016-10-04T22:24:54Z</published>
+        <updated>2016-10-04T22:24:54Z</updated>
+        <summary type="html">
+
+&lt;div class=&quot;question-status question-originals-of-duplicate&quot;&gt;
+    &lt;p&gt;This question already has an answer here:&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;/questions/12573816/what-is-an-undefined-reference-unresolved-external-symbol-error-and-how-do-i-fix&quot; dir=&quot;ltr&quot;&gt;What is an undefined reference/unresolved external symbol error and how do I fix it?&lt;/a&gt;
+                &lt;span class=&quot;question-originals-answer-count&quot;&gt;
+                    25 answers
+                &lt;/span&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+            &lt;p&gt;I am currently trying to compile PyDasm, a python wrapper for libdasm, from &lt;a href=&quot;https://github.com/axcheron/pydasm&quot; rel=&quot;nofollow&quot;&gt;here&lt;/a&gt; on Windows 10, with Visual Studio 2015 and Python 3.5. Compiling fails with this error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;LINK : error LNK2001: unresolved external symbol PyInit_pydasm
+build\temp.win32-3.5\Release\./libdasm\pydasm.cp35-win32.lib : fatal error LNK1120: 1 unresolved externals
+error: command &#39;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\BIN\\link.exe&#39; failed with exit status 1120
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Any ideas on how to fix this?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862596</id>
+        <re:rank scheme="http://stackoverflow.com">-5</re:rank>
+        <title type="text">if statment not working with 3rd condition having 2 OR options</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="if-statement" />
+        <author>
+            <name>Daniel Iwański</name>
+            <uri>http://stackoverflow.com/users/6923444</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862596/if-statment-not-working-with-3rd-condition-having-2-or-options" />
+        <published>2016-10-04T22:14:48Z</published>
+        <updated>2016-10-04T22:23:07Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I want to get result only when all 3 conditions are fullfilled, code works good when 3rd has only one option ex &quot;smith&quot; but taking only 1 condition if 3rd has 2 or more ex &quot;smith&quot;||&quot;Smith&quot;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+using namespace std;
+
+int main()
+{
+    int age;
+    string name;
+    string lastname;
+    cout &amp;lt;&amp;lt; &quot;Podaj swoje imie&quot; &amp;lt;&amp;lt; endl;
+    cin &amp;gt;&amp;gt; name;
+    cout &amp;lt;&amp;lt; &quot;Podaj swoje nazwisko&quot; &amp;lt;&amp;lt; endl;
+    cin &amp;gt;&amp;gt; lastname;
+    cout &amp;lt;&amp;lt; &quot;Wprowadz swoj wiek&quot; &amp;lt;&amp;lt; endl;
+    cin &amp;gt;&amp;gt; age;
+    cout &amp;lt;&amp;lt; &quot;Imie: &quot;;
+    cout &amp;lt;&amp;lt; name &amp;lt;&amp;lt; endl;
+    cout &amp;lt;&amp;lt; &quot;Nazwisko: &quot;;
+    cout &amp;lt;&amp;lt; lastname &amp;lt;&amp;lt; endl;
+    cout &amp;lt;&amp;lt; &quot;Wiek: &quot;;
+    cout &amp;lt;&amp;lt; age &amp;lt;&amp;lt; endl;
+    if (age &amp;lt; 18)
+    {
+        cout &amp;lt;&amp;lt; &quot;you&#39;re too young&quot;;
+    }
+    else
+    {
+        cout &amp;lt;&amp;lt; &quot;you can drink&quot; &amp;lt;&amp;lt; endl;
+    }
+    if ((age == 27)
+            &amp;amp;&amp;amp; (name == &quot;katarzyna&quot; || &quot;kasia&quot; || &quot;Katarzyna&quot; || &quot;Kasia&quot;)
+            &amp;amp;&amp;amp; (lastname == &quot;smith&quot; || &quot;Smith&quot;))
+    {
+        cout &amp;lt;&amp;lt; &quot;BOOM&quot; &amp;lt;&amp;lt; endl;
+        cout &amp;lt;&amp;lt; &quot;BOOM&quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862670</id>
+        <re:rank scheme="http://stackoverflow.com">-2</re:rank>
+        <title type="text">Getline equivalent for class and int, and also &#39;no viable overloaded =&#39; error</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="getline" />
+        <author>
+            <name>William Stone Otworth</name>
+            <uri>http://stackoverflow.com/users/6923459</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862670/getline-equivalent-for-class-and-int-and-also-no-viable-overloaded-error" />
+        <published>2016-10-04T22:22:42Z</published>
+        <updated>2016-10-04T22:22:42Z</updated>
+        <summary type="html">
+
+
+            &lt;pre&gt;&lt;code&gt;class Book{
+public:
+string _title;
+string _author;
+string _publisher;
+Date _published;
+float _price;
+string _isbn;
+int _page;
+int _copies;
+
+
+Book(void);
+Book(string, string, string, Date, float, string, int, int);
+};
+
+Book::Book(void)
+{
+ _title = &quot;&quot;;
+ _author = &quot;&quot;;
+ _publisher = &quot;&quot;;
+ _published = 0;
+ _price = 0;
+ _isbn = &quot;&quot;;
+ _page = 0;
+ _copies = 0;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where Date is a class including ints for day, month, and year. This generates a no viable overloaded = error.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int main(void)
+{
+LinkedList myList;
+ifstream myFile(&quot;sample.txt&quot;);
+
+string title;
+string author;
+string publisher;
+Date published;
+float price;
+string isbn;
+int page;
+int copies;
+
+
+while( myFile )
+{
+getline(myFile,title);
+getline(myFile,author);
+getline(myFile,publisher);
+getline(myFile,published);
+getline(myFile,price);
+getline(myFile,isbn);
+getline(myFile,page);
+getline(myFile,copies);
+
+myList.insert_rear(new    Book(title,author,publisher,published,price,isbn,page,copies));
+}
+
+myList.print_list();
+
+return 0;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;For getline published(Date class), price(int), page(int), and copies(int) I&#39;m getting a no matching function call for getline. I know getline is for strings so I expected that error. What can I do instead?&lt;/p&gt;
+
+&lt;p&gt;Thank you, and if you need to see more code let me know.&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/35600128</id>
+        <re:rank scheme="http://stackoverflow.com">2</re:rank>
+        <title type="text">Get windows Quiet hours from Win32 or C# API</title>
+            <category scheme="http://stackoverflow.com/tags" term="c#" />
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="winapi" />
+        <author>
+            <name>Pankaj</name>
+            <uri>http://stackoverflow.com/users/1679919</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/35600128/get-windows-quiet-hours-from-win32-or-c-sharp-api" />
+        <published>2016-02-24T10:55:08Z</published>
+        <updated>2016-10-04T22:09:10Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;Windows introduced &quot;Quiet Hours&quot; OR &quot;Do not disturb&quot; feature from Windows version 8 onward. Using this feature, one can disable notifications popups for configured amount of time from task bar notification area.&lt;/p&gt;
+
+&lt;p&gt;I am trying to get current OS, Quiet hours within C++ or from C# application but haven&#39;t found any API or Event.&lt;/p&gt;
+
+&lt;p&gt;Can anybody help on this to resolve my issue?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39861299</id>
+        <re:rank scheme="http://stackoverflow.com">3</re:rank>
+        <title type="text">refer to a dependent typename</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="templates" />
+            <category scheme="http://stackoverflow.com/tags" term="using" />
+        <author>
+            <name>Emanuele Paolini</name>
+            <uri>http://stackoverflow.com/users/1221660</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39861299/refer-to-a-dependent-typename" />
+        <published>2016-10-04T20:35:53Z</published>
+        <updated>2016-10-04T22:08:34Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;In the following code snippet:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;map&amp;gt;
+
+template&amp;lt;class T&amp;gt;
+struct Base {
+  typedef T U;
+};
+
+template&amp;lt;class T&amp;gt;
+struct Derived: public Base&amp;lt;std::map&amp;lt;int,std::map&amp;lt;int,T&amp;gt;&amp;gt;&amp;gt; {
+  typedef typename Base&amp;lt;std::map&amp;lt;int,std::map&amp;lt;int,T&amp;gt;&amp;gt;&amp;gt;::U U; // ugly!
+
+  void F(U u) {};
+};
+
+int main(){}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;the marked line is ugly and also contains duplicated information (if the type of the Base class parameters changes, this line must be changed too). However it is necessary to have such a repeated declaration, otherwise the code does not compile. Also, I would like to avoid to make a global typedef declaration...&lt;/p&gt;
+
+&lt;p&gt;Is there a solution to refer to a type defined in a template dependant base class?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39860761</id>
+        <re:rank scheme="http://stackoverflow.com">1</re:rank>
+        <title type="text">WinSock 2.2 send() always returns all bytes sent</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="c" />
+            <category scheme="http://stackoverflow.com/tags" term="sockets" />
+            <category scheme="http://stackoverflow.com/tags" term="send" />
+        <author>
+            <name>Infogeek</name>
+            <uri>http://stackoverflow.com/users/6773201</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39860761/winsock-2-2-send-always-returns-all-bytes-sent" />
+        <published>2016-10-04T19:58:14Z</published>
+        <updated>2016-10-04T22:05:33Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;WinSock 2.2 send() function always returns me all the bytes I want it to send! I am connecting to google.com on port 80 and sending random &lt;code&gt;t&lt;/code&gt; letters for data. I even tried to send as many as 1GB of &lt;code&gt;t&lt;/code&gt;&#39;s. It still returns with all bytes sent. I was expecting it to return back with me with how many bytes it could fit in a packet and the rest would be handled by the while loop in the implementation, but it never enters inside the while loop as a result!&lt;/p&gt;
+
+&lt;p&gt;I am using TCP/IPv4 sockets. I know my internet is not lighting fast to send 1GB faster than I can blink.&lt;/p&gt;
+
+&lt;p&gt;This code is shown for most important chunks. For example a wrapper for the C-string send call is omitted that calls the send I shown.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Calling test code&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//prepare the long data string
+int buffSize = 1 * 1000 * 1000 * 1000;
+char *buff = new char[buffSize];
+memset(buff, &#39;t&#39;, buffSize);
+buff[buffSize - 3] = &#39;\n&#39;;
+buff[buffSize - 2] = &#39;\n&#39;;
+buff[buffSize - 1] = &#39;\0&#39;;
+
+//send thee data
+int bytesSent = socket-&amp;gt;send(buff);
+
+//verify all thee data is sent
+CHECK(bytesSent == strlen(buff));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Send implementatian&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int mySocket::send(const void *data, int length)
+{
+    int bytesSent = ::send(socketDescriptor, (char*)data, length, 0);
+
+    if (bytesSent == SOCKET_ERROR) return -1;
+
+    while(bytesSent &amp;lt; length)
+    {
+        int sent = ::send(socketDescriptor, (char*)data + bytesSent, length - bytesSent, 0);
+
+        if (sent == SOCKET_ERROR) return bytesSent;
+
+        bytesSent += sent;
+    }
+
+    return bytesSent;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT 1&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Since it started to confuse people here is the wrapper&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Send wrapper&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int mySocket::send(const char * data_string)
+{
+    return send(dataString, strlen(data_string));
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT 2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;here is a full working example you can debug. it produces the same result, it just instantly reports all bytes as sent.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;WinSock2.h&amp;gt;
+#include &amp;lt;WS2tcpip.h&amp;gt;
+#include &amp;lt;stdio.h&amp;gt;
+#pragma comment(lib, &quot;ws2_32.lib&quot;)
+
+class mySocket
+{
+public:
+
+    mySocket(SOCKET sockeDesc)
+    {
+        socketDescriptor = sockeDesc;
+    }
+
+    int mySocket::send(const void *data, int length)
+    {
+        int bytesSent = ::send(socketDescriptor, (char*)data, length, 0);
+
+        if (bytesSent == SOCKET_ERROR) return -1;
+
+        while (bytesSent &amp;lt; length)
+        {
+            int sent = ::send(socketDescriptor, (char*)data + bytesSent, length - bytesSent, 0);
+
+            if (sent == SOCKET_ERROR) return bytesSent;
+
+            bytesSent += sent;
+        }
+
+        return bytesSent;
+    }
+
+    int mySocket::send(const char * data_string)
+    {
+        return send(data_string, strlen(data_string));
+    }
+private:
+    SOCKET socketDescriptor;
+};
+
+int main()
+{
+    WSAData wsd;
+    if (WSAStartup(MAKEWORD(2, 2), &amp;amp;wsd) || wsd.wVersion != MAKEWORD(2, 2))
+    {
+        WSACleanup();
+        return 1;
+    }
+
+    //create ze socket
+    SOCKET socketDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+
+    //look up socket info
+    addrinfo hints;
+    memset(&amp;amp;hints, 0, sizeof(hints));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+
+    addrinfo *res;
+    int errCode = getaddrinfo(&quot;google.com&quot;, &quot;80&quot;, &amp;amp;hints, &amp;amp;res);
+    if (errCode) return 1;
+
+    //connect ze socket
+    int connectStatusCode = ::connect(socketDescriptor, res-&amp;gt;ai_addr, res-&amp;gt;ai_addrlen);
+    if (connectStatusCode == SOCKET_ERROR) return 1;
+
+    //create zeeeee socket!
+    mySocket *socket = new mySocket(socketDescriptor);
+
+    //prepare ze long data string
+    int buffSize = 1 * 1000 * 1000 * 1000;
+    char *buff = new char[buffSize];
+    memset(buff, &#39;t&#39;, buffSize);
+    buff[buffSize - 3] = &#39;\n&#39;;
+    buff[buffSize - 2] = &#39;\n&#39;;
+    buff[buffSize - 1] = &#39;\0&#39;;
+
+    //send ze data
+    int bytesSent = socket-&amp;gt;send(buff);
+
+    //verify all ze data is sent
+    bool success = (bytesSent == strlen(buff));
+
+    printf(&quot;requested bytes = %i\nsent bytes = \t  %i&quot;, strlen(buff), bytesSent);
+    printf(&quot;\n\nsuccess = %s&quot;, success ? &quot;true&quot; : &quot;false&quot;);
+
+    closesocket(socketDescriptor);
+    delete socket;
+    freeaddrinfo(res);
+    WSACleanup();
+    getchar();
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39860675</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Wrapping namespaced custom types defined only in headers with SWIG</title>
+            <category scheme="http://stackoverflow.com/tags" term="python" />
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="swig" />
+        <author>
+            <name>BPL</name>
+            <uri>http://stackoverflow.com/users/3809375</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39860675/wrapping-namespaced-custom-types-defined-only-in-headers-with-swig" />
+        <published>2016-10-04T19:52:27Z</published>
+        <updated>2016-10-04T22:02:21Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;How can i wrap this content using SWIG?&lt;/p&gt;
+
+&lt;p&gt;usecase5.h&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#ifndef __USECASE5_H__
+#define __USECASE5_H__
+
+#include &amp;lt;math.h&amp;gt;
+
+namespace foo_namespace {
+    struct vec2
+    {
+        int x, y;
+
+        vec2() {}
+
+        explicit vec2( int a, int b )
+        {
+            x = a;
+            y = b;
+        }
+
+        vec2 &amp;amp; operator =( vec2  const &amp;amp; v ) { x = v.x;  y = v.y;  return *this; }
+        vec2 &amp;amp; operator/=( vec2  const &amp;amp; v ) { x /= v.x; y /= v.y; return *this; }
+
+        vec2 xx() const { return vec2(x,x); }
+    }
+}
+
+#endif
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;usecase6.h&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#ifndef __USECASE6_H__
+#define __USECASE6_H__
+
+#include &quot;usecase5.h&quot;
+
+namespace foo_namespace {
+    vec2  usecase6_f1(const vec2 &amp;amp; x);
+}
+
+#endif
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;usecase6.cpp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;namespace foo_namespace {
+    vec2  usecase6_f1(const vec2 &amp;amp; x)
+    {
+        x = vec2();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;example.i&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// GENERATED BY gen_swig.py at 2016-10-04 21:46
+
+%module example
+
+%{
+//#include &quot;usecase1.h&quot;
+//#include &quot;usecase2.h&quot;
+//#include &quot;usecase3.h&quot;
+//#include &quot;usecase4.h&quot;
+#include &quot;usecase5.h&quot;
+#include &quot;usecase6.h&quot;
+
+using namespace foo_namespace;
+%}
+
+//%include &quot;usecase1.h&quot;
+//%include &quot;usecase2.h&quot;
+//%include &quot;usecase3.h&quot;
+//%include &quot;usecase4.h&quot;
+%include &quot;usecase5.h&quot;
+%include &quot;usecase6.h&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After trying that naive example.i with &lt;code&gt;swig -python -c++ example.i&lt;/code&gt; I&#39;ll get:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usecase5.h(19) : Warning 362: operator= ignored
+usecase5.h(24) : Error: Syntax error in input(3).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So, how could I wrap this little dummy c++ example?&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/37421963</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">(VS15 C++) Got a Visual Leak Detector report, but what now?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="memory-leaks" />
+            <category scheme="http://stackoverflow.com/tags" term="visual-studio-2015" />
+            <category scheme="http://stackoverflow.com/tags" term="visual-leak-detector" />
+        <author>
+            <name>CPU_01</name>
+            <uri>http://stackoverflow.com/users/4236385</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/37421963/vs15-c-got-a-visual-leak-detector-report-but-what-now" />
+        <published>2016-05-24T19:10:11Z</published>
+        <updated>2016-10-04T22:01:07Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;because of some (strange) problems in my C++-project I used Visual Leak Detector (for the first time), to check the project on memory leaks.
+So I got i.a. the follwoing reports:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    WARNING: Visual Leak Detector detected memory leaks!
+---------- Block 4 at 0x004D07B0: 200 bytes ----------
+  Leak Hash: 0xD2D1B4A0, Count: 1, Total 200 bytes
+  Call Stack (TID 8796):
+    ucrtbase.dll!malloc()
+    f:\dd\vctools\crt\vcstartup\src\heap\new_scalar.cpp (19): LASS.exe!operator new() + 0x8 bytes
+    clr.dll!0x72D616E5()
+  Data:
+    28 75 14 03    00 00 00 00    01 00 00 00    00 00 00 00     (u...... ........
+    9A 99 99 99    99 99 B9 3F    50 00 00 00    0A 00 00 00     .......? P.......
+    00 00 00 00    F4 01 00 00    00 00 00 00    01 00 00 00     ........ ........
+    7B 14 AE 47    E1 7A 74 3F    14 00 00 00    BA FF FF FF     {..G.zt? ........
+    00 00 00 00    F4 01 00 00    00 00 00 00    01 00 00 00     ........ ........
+    7B 14 AE 47    E1 7A 84 3F    00 00 00 00    64 00 00 00     {..G.z.? ....d...
+    00 00 00 00    01 00 00 00    14 00 00 00    46 00 00 00     ........ ....F...
+    00 00 00 00    64 00 00 00    00 00 00 00    F4 01 00 00     ....d... ........
+    01 00 00 00    B8 E2 13 03    F0 AD 18 03    00 00 00 00     ........ ........
+    C8 E2 13 03    C8 AB 18 03    00 00 00 00    78 E3 13 03     ........ ....x...
+    B8 AC 18 03    00 00 00 00    68 E2 13 03    E8 AC 18 03     ........ h.......
+    00 00 00 00    14 00 00 00    01 00 00 00    64 00 00 00     ........ ....d...
+    01 00 00 00    00 00 00 00                                   ........ ........
+
+
+---------- Block 20 at 0x004D0880: 200 bytes ----------
+  Leak Hash: 0xD2D1B4A0, Count: 1, Total 200 bytes
+  Call Stack (TID 8796):
+    ucrtbase.dll!malloc()
+    f:\dd\vctools\crt\vcstartup\src\heap\new_scalar.cpp (19): LASS.exe!operator new() + 0x8 bytes
+    clr.dll!0x72D616E5()
+  Data:
+    78 74 14 03    00 00 00 00    01 00 00 00    00 00 00 00     xt...... ........
+    9A 99 99 99    99 99 B9 3F    50 00 00 00    0A 00 00 00     .......? P.......
+    00 00 00 00    F4 01 00 00    00 00 00 00    01 00 00 00     ........ ........
+    7B 14 AE 47    E1 7A 74 3F    14 00 00 00    BA FF FF FF     {..G.zt? ........
+    00 00 00 00    F4 01 00 00    00 00 00 00    01 00 00 00     ........ ........
+    7B 14 AE 47    E1 7A 84 3F    00 00 00 00    64 00 00 00     {..G.z.? ....d...
+    00 00 00 00    01 00 00 00    14 00 00 00    46 00 00 00     ........ ....F...
+    00 00 00 00    64 00 00 00    00 00 00 00    F4 01 00 00     ....d... ........
+    01 00 00 00    38 E2 13 03    00 F0 15 03    00 00 00 00     ....8... ........
+    B8 E1 13 03    88 00 7F 05    00 00 00 00    08 E2 13 03     ........ ........
+    20 FF 7E 05    00 00 00 00    E8 E1 13 03    80 FF 7E 05     ..~..... ......~.
+    00 00 00 00    14 00 00 00    01 00 00 00    64 00 00 00     ........ ....d...
+    01 00 00 00    00 00 00 00                                   ........ ........
+
+
+---------- Block 31 at 0x0053E1B8: 72 bytes ----------
+  Leak Hash: 0x3F88029B, Count: 1, Total 72 bytes
+  Call Stack (TID 8796):
+    ucrtbase.dll!malloc()
+    f:\dd\vctools\crt\vcstartup\src\heap\new_scalar.cpp (19): LASS.exe!operator new() + 0x8 bytes
+    clr.dll!0x72D616E5()
+  Data:
+    60 BC 55 00    40 3E 80 05    A0 3F 80 05    A0 3F 80 05     `.U.@&amp;gt;.. .?...?..
+    60 BB 55 00    20 34 18 03    00 00 00 00    00 00 00 00     `.U..4.. ........
+    00 00 00 00    20 00 00 00    2F 00 00 00    80 BC 55 00     ........ /.....U.
+    00 2E 18 03    00 00 00 00    00 00 00 00    00 00 00 00     ........ ........
+    20 00 00 00    2F 00 00 00                                   ..../... ........
+
+
+---------- Block 33 at 0x0055BB60: 8 bytes ----------
+  Leak Hash: 0xA49C5AA6, Count: 1, Total 8 bytes
+  Call Stack (TID 8796):
+    ucrtbase.dll!malloc()
+    f:\dd\vctools\crt\vcstartup\src\heap\new_scalar.cpp (19): LASS.exe!operator new() + 0x8 bytes
+    clr.dll!0x72D616E5()
+  Data:
+    C8 E1 53 00    00 00 00 00
+
+   ..S..... ........
+
+    //And many more...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunatly I do not understand, what VLD wants to say is the problem.
+With a double-click on the &quot;f:\dd...&quot;-lines it should set my courser to the line with the problem, shouldn&#180;t it? But it dosen&#180;t.&lt;/p&gt;
+
+&lt;p&gt;My question is now: How do I get to the area of the problem or in other words &quot;how do I read these reports&quot;?&lt;/p&gt;
+
+&lt;p&gt;In addition: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I use Visual Studio 2015 &lt;/li&gt;
+&lt;li&gt;The project is a C++ Windows Forms Project&lt;/li&gt;
+&lt;li&gt;I included the vld.h in the additional includes and the lib-directory to the additional libraries of the project&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;main()&lt;/code&gt; I use &lt;code&gt;#include &amp;lt;vld.h&amp;gt;&lt;/code&gt; and &lt;code&gt;_CrtDumpMemoryLeaks()&lt;/code&gt;;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;EDIT: &lt;/p&gt;
+
+&lt;p&gt;My Main (a reduced version, but gives similar reports): &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//some class-includes
+#include &amp;lt;vld.h&amp;gt;
+
+using namespace System;
+using namespace System::Windows::Forms;
+using namespace std;
+
+#define _CRTDBG_MAP_ALLOC
+#include &amp;lt;stdlib.h&amp;gt;
+#include &amp;lt;crtdbg.h&amp;gt;
+
+[STAThread]
+void Main()
+{
+    Application::EnableVisualStyles();
+    Application::SetCompatibleTextRenderingDefault(false);
+
+
+    Experiment* experiment = new Experiment();
+    Experiment_List*  running_experiments = new Experiment_List();
+
+    while(!experiment-&amp;gt;end) {
+        experiment= new Experiment();
+
+        LASS::MainWindow form(experiment, running_experiments);
+        form.ShowDialog();
+
+        if(!experiment-&amp;gt;end){
+            running_experiments-&amp;gt;register_experiment(experiment);
+        }
+    }
+
+    running_experimente-&amp;gt;end_all();
+
+    _CrtDumpMemoryLeaks();
+
+    exit(0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunatley there are about 40 classes, that I do not want to post...&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39861699</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">C++ random_shuffle is always giving the same results</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="c++11" />
+        <author>
+            <name>Ana Echavarria</name>
+            <uri>http://stackoverflow.com/users/5195755</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39861699/c-random-shuffle-is-always-giving-the-same-results" />
+        <published>2016-10-04T21:03:11Z</published>
+        <updated>2016-10-04T22:00:49Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;The following call for random shuffle is always giving the same results for the vector v&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;vector&amp;gt;
+#include &amp;lt;algorithm&amp;gt;
+#include &amp;lt;cstdlib&amp;gt;
+
+using namespace std;
+
+int main(){
+  vector&amp;lt;int&amp;gt; v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  srand(time(0));
+  random_shuffle(v.begin(), v.end());
+  for (int i = 0; i &amp;lt; v.size(); ++i) printf(&quot;%d &quot;, v[i]); printf(&quot;\n&quot;);
+  printf(&quot;%d\n&quot;, rand() % 100);
+
+  return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I&#39;ve tried compiling using &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;g++ -std=c++0x
+g++ -std=c++11
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But both give the same results every time so I don&#39;t really understand what&#39;s going on. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$./a.out
+7 1 4 6 8 9 5 2 3 10
+26
+$ ./a.out
+7 1 4 6 8 9 5 2 3 10
+41
+$ ./a.out
+7 1 4 6 8 9 5 2 3 10
+39
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39861293</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Work with arrays (string) C</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="arrays" />
+            <category scheme="http://stackoverflow.com/tags" term="string" />
+        <author>
+            <name>Merk30</name>
+            <uri>http://stackoverflow.com/users/4721756</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39861293/work-with-arrays-string-c" />
+        <published>2016-10-04T20:35:22Z</published>
+        <updated>2016-10-04T21:59:40Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;This is a beta test code of the algorithm Malgrange, I need to create array Y1 from C0... (Y1 = C0 - X0)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+
+using namespace std;
+
+int main()
+{
+// create array C0
+string** masiv_C0=new string*[3];
+
+for (int i=0;i&amp;lt;3;i++)
+    masiv_C0[i]=new string [2];
+
+masiv_C0[0][0]=&quot;AB&quot;;
+masiv_C0[0][1]=&quot;C&quot;;
+
+masiv_C0[1][0]=&quot;X&quot;;
+masiv_C0[1][1]=&quot;Z&quot;;
+
+masiv_C0[2][0]=&quot;XY&quot;;
+masiv_C0[2][1]=&quot;ZQ&quot;;
+
+//create array X0
+string** masiv_X0=new string*[1];
+masiv_X0[i]=new string [2];
+
+masiv_X0[0][0]=&quot;X&quot;;
+masiv_X0[0][1]=&quot;Z&quot;;
+
+//create array Y1 = C0 - X0 (remove from C0 elements X0)
+bool flag;
+string** masiv_Y1=new string*[3];
+
+for (int i=0;i&amp;lt;3;i++)
+    masiv_Y1[i]=new string [2];
+
+for (int i=0;i&amp;lt;3;i++)
+{
+    flag=true;
+    for (int j=0;j&amp;lt;3;j++)
+    {
+        if ((masiv_C0[i][0]==masiv_X0[j][0])&amp;amp;&amp;amp;(masiv_C0[i][1]==masiv_X0[j][1]))
+        {
+            flag=false;
+            break;
+        }
+    }
+    if (flag)
+    {
+        masiv_Y1[i][0]=masiv_C0[i][0];
+        masiv_Y1[i][1]=masiv_C0[i][0];
+    }
+}
+
+for (int i=0;i&amp;lt;3;i++)
+{
+    for (int j=0;j&amp;lt;2;j++)
+    {
+        cout&amp;lt;&amp;lt;masiv_Y1[i][j];
+    }
+    cout&amp;lt;&amp;lt;endl&amp;lt;&amp;lt;endl;
+}}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Of course the algorithm is not finalized and most of the code is not here, but the problem is this error, I can not create an array without the elements that are contained in a subset of the other elements&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862305</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Debug package that relies on Rcpp in XCode</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="xcode" />
+            <category scheme="http://stackoverflow.com/tags" term="debugging" />
+            <category scheme="http://stackoverflow.com/tags" term="rcpp" />
+            <category scheme="http://stackoverflow.com/tags" term="rinside" />
+        <author>
+            <name>Stereo</name>
+            <uri>http://stackoverflow.com/users/4099925</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862305/debug-package-that-relies-on-rcpp-in-xcode" />
+        <published>2016-10-04T21:48:12Z</published>
+        <updated>2016-10-04T21:57:34Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I am developing my own package on a Mac. The package relies on &lt;code&gt;Rcpp&lt;/code&gt; as backend. At a certain point the complete memory gets corrupted in R. I am trying to figure out what exactly happens by adding &lt;code&gt;print&lt;/code&gt;, &lt;code&gt;Rcerr&lt;/code&gt; statements and &lt;code&gt;try {} catch&lt;/code&gt; blocks  but I have not had any success yet.&lt;/p&gt;
+
+&lt;p&gt;As a next attempt I wanted to use XCode debugger with &lt;code&gt;RInside&lt;/code&gt;. The code that makes my package fail in C++:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;RInside.h&amp;gt;                            // for the embedded R via RInside
+
+int main(int argc, char *argv[]) {
+
+    RInside R(argc, argv);                      // create an embedded R instance
+
+    std::string str = &quot;require(GeneralTree)&quot;
+      &quot;create_tree &amp;lt;- function(number_of_childeren = 2, depth = 3) {&quot;
+      &quot;  idx &amp;lt;- 0&quot;
+      &quot;  tree &amp;lt;- GeneralTree$new(id = idx, data = idx)&quot;
+      &quot;  for (i in 1 : (depth - 1)) {&quot;
+      &quot;    parents &amp;lt;- tree$getLeafsInfo(what = &#39;key&#39;)&quot;
+      &quot;    for (p in parents) {&quot;
+      &quot;      for (n in 1 : number_of_childeren) {&quot;
+      &quot;        idx &amp;lt;- idx + 1&quot;
+      &quot;        tree$addNode(parent = p, id = idx, data = idx)&quot;
+      &quot;      }&quot;
+      &quot;    }&quot;
+      &quot;  }&quot;
+      &quot;  return(tree)&quot;
+      &quot;}&quot;
+      &quot;create_tree(number_of_children = 16)&quot;; // This causes the R some errors at idx = 165
+
+    Rcpp::SEXP v = R.parseEval(str);
+
+    exit(0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I used a &lt;code&gt;Makefile&lt;/code&gt; provided by RInside&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;## -*- mode: make; tab-width: 8; -*-
+##
+## Simple Makefile
+##
+## TODO:
+##  proper configure for non-Debian file locations,   [ Done ]
+##  allow RHOME to be set for non-default R etc
+
+## comment this out if you need a different version of R,
+## and set set R_HOME accordingly as an environment variable
+R_HOME :=       $(shell R RHOME)
+
+sources :=      $(wildcard *.cpp)
+programs :=         $(sources:.cpp=)
+
+
+## include headers and libraries for R
+RCPPFLAGS :=        $(shell $(R_HOME)/bin/R CMD config --cppflags)
+RLDFLAGS :=         $(shell $(R_HOME)/bin/R CMD config --ldflags)
+RBLAS :=        $(shell $(R_HOME)/bin/R CMD config BLAS_LIBS)
+RLAPACK :=      $(shell $(R_HOME)/bin/R CMD config LAPACK_LIBS)
+
+## if you need to set an rpath to R itself, also uncomment
+#RRPATH :=      -Wl,-rpath,$(R_HOME)/lib
+
+## include headers and libraries for Rcpp interface classes
+## note that RCPPLIBS will be empty with Rcpp (&amp;gt;= 0.11.0) and can be omitted
+RCPPINCL :=         $(shell echo &#39;Rcpp:::CxxFlags()&#39; | $(R_HOME)/bin/R --vanilla --slave)
+RCPPLIBS :=         $(shell echo &#39;Rcpp:::LdFlags()&#39;  | $(R_HOME)/bin/R --vanilla --slave)
+
+
+## include headers and libraries for RInside embedding classes
+RINSIDEINCL :=      $(shell echo &#39;RInside:::CxxFlags()&#39; | $(R_HOME)/bin/R --vanilla --slave)
+RINSIDELIBS :=      $(shell echo &#39;RInside:::LdFlags()&#39;  | $(R_HOME)/bin/R --vanilla --slave)
+
+## compiler etc settings used in default make rules
+CXX :=          $(shell $(R_HOME)/bin/R CMD config CXX)
+CPPFLAGS :=         -Wall $(shell $(R_HOME)/bin/R CMD config CPPFLAGS)
+CXXFLAGS :=         $(RCPPFLAGS) $(RCPPINCL) $(RINSIDEINCL) $(shell $(R_HOME)/bin/R CMD config CXXFLAGS)
+LDLIBS :=       $(RLDFLAGS) $(RRPATH) $(RBLAS) $(RLAPACK) $(RCPPLIBS) $(RINSIDELIBS)
+
+all:            $(programs)
+            @test -x /usr/bin/strip &amp;amp;&amp;amp; strip $^
+
+run:            $(programs)
+            @for p in $(programs); do echo; echo &quot;Running $$p:&quot;; ./$$p; done
+
+clean:
+            rm -vf $(programs)
+            rm -vrf *.dSYM
+
+runAll:
+            for p in $(programs); do echo &quot;&quot;; echo &quot;&quot;; echo &quot;Running $$p&quot;; ./$$p; done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To run the example you will have to install my package using,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;devtools::install_github(&quot;abossenbroek/GeneralTree&quot;, ref = &quot;feature/implementation_cpp_of_treenode_ds&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;My approach is to start in &lt;code&gt;XCode -&amp;gt; File -&amp;gt; New -&amp;gt; Project&lt;/code&gt; , &lt;code&gt;External Build System&lt;/code&gt; and select the &lt;code&gt;Makefile&lt;/code&gt; and add the source. I can successfully build but I cannot select &lt;code&gt;Product -&amp;gt; Run&lt;/code&gt; with which I was hoping to debug my program. Any tips are greatly appreciated.&lt;/p&gt;
+
+&lt;p&gt;System info: &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;R version 3.3.1 (2016-06-21)
+Platform: x86_64-apple-darwin15.5.0 (64-bit)
+Running under: OS X 10.12 (Sierra)
+XCode version: 7.2 (7C68)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1&gt;GDB Approach&lt;/h1&gt;
+
+&lt;p&gt;I tried to run GDB but get the following output&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  R -d gdb
+GNU gdb (GDB) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &amp;lt;http://gnu.org/licenses/gpl.html&amp;gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-apple-darwin15.5.0&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&amp;lt;http://www.gnu.org/software/gdb/bugs/&amp;gt;.
+Find the GDB manual and other documentation resources online at:
+&amp;lt;http://www.gnu.org/software/gdb/documentation/&amp;gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from /usr/local/Cellar/r/3.3.1_2/R.framework/Resources/bin/exec/R...(no debugging symbols found)...done.
+(gdb) r
+Starting program: /usr/local/Cellar/r/3.3.1_2/R.framework/Versions/3.3/Resources/bin/exec/R
+Unable to find Mach task port for process-id 17168: (os/kern) failure (0x5).
+ (please check gdb is codesigned - see taskgated(8))
+&lt;/code&gt;&lt;/pre&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/2207053</id>
+        <re:rank scheme="http://stackoverflow.com">16</re:rank>
+        <title type="text">What are app domains used for?</title>
+            <category scheme="http://stackoverflow.com/tags" term="c#" />
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="appdomain" />
+        <author>
+            <name>Justin</name>
+            <uri>http://stackoverflow.com/users/113141</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/2207053/what-are-app-domains-used-for" />
+        <published>2010-02-05T12:13:46Z</published>
+        <updated>2016-10-04T21:55:13Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I understand roughly what an AppDomain is, however I don&#39;t fully understand the uses for an AppDomain.&lt;/p&gt;
+
+&lt;p&gt;I&#39;m involved in a large server based C# / C++ application and I&#39;m wondering how  using AppDomains could improve stability / security / performance.&lt;/p&gt;
+
+&lt;p&gt;In particular:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I understand that a fault or fatal exception in one domain does not affect other app domains running in the same process - Does this also hold true for unmanaged / C++ exceptions, possibly even heap corruption or other memory issues.&lt;/li&gt;
+&lt;li&gt;How does inter-AppDomain communication work?&lt;/li&gt;
+&lt;li&gt;How is using AppDomains different from simply spawning many processes?&lt;/li&gt;
+&lt;/ul&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862389</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Unable to load a native plugin into unity3d</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="unity3d" />
+            <category scheme="http://stackoverflow.com/tags" term="unmanaged" />
+        <author>
+            <name>fryBender</name>
+            <uri>http://stackoverflow.com/users/955880</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862389/unable-to-load-a-native-plugin-into-unity3d" />
+        <published>2016-10-04T21:55:09Z</published>
+        <updated>2016-10-04T21:55:09Z</updated>
+        <summary type="html">
+
+
+            &lt;p&gt;I have been trying to get a native plugin to work with a Unity3D project. The native plugin&#39;s function was to wrap around some Win32 system calls, I was interested in getting a volumes labels. To narrow down my problem, I removed any external dependencies on this code and just used a hello world call. After the application crashed several times on version 5.3.4f1, I decided to update to the latest version and I&#39;m seeing an actual error. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Failed to load &#39;Assets/Plugin/TestCPPLibrary.dll&#39; with error &#39;The specified module could not be found.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is my unmanaged code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// TestCPPLibrary.h
+
+#ifdef TESTFUNCDLL_EXPORT
+#define TESTFUNCDLL_API __declspec(dllexport)
+#else
+#define TESTFUNCDLL_API __declspec(dllimport)
+#endif
+
+extern &quot;C&quot;
+{
+    TESTFUNCDLL_API char* GetHello();
+}
+
+// TestCPPLibrary.cpp : Defines the exported functions for the DLL application.
+//
+
+#include &quot;TestCPPLibrary.h&quot;
+
+extern &quot;C&quot;
+{
+
+    char* GetHello()
+    {
+        return &quot;Hello&quot;;
+    }
+}
+
+
+using System;
+using System.Runtime.InteropServices;
+using UnityEngine;
+
+namespace Assets.Scripts.Tests
+{
+using System.Runtime.InteropServices;
+
+public class TestingDriveInfo : MonoBehaviour
+{
+    // The imported function
+    [DllImport(&quot;TestDLL&quot;, EntryPoint = &quot;GetHello&quot;)]
+    public static extern string TestSort();
+
+
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            UnityEngine.Debug.Log(TestSort());
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+
+        </summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/q/39862181</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Static, private member of a class internal type [duplicate]</title>
+            <category scheme="http://stackoverflow.com/tags" term="c++" />
+            <category scheme="http://stackoverflow.com/tags" term="c++11" />
+            <category scheme="http://stackoverflow.com/tags" term="static" />
+            <category scheme="http://stackoverflow.com/tags" term="c++14" />
+        <author>
+            <name>dani</name>
+            <uri>http://stackoverflow.com/users/3392714</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/39862181/static-private-member-of-a-class-internal-type" />
+        <published>2016-10-04T21:38:16Z</published>
+        <updated>2016-10-04T21:49:03Z</updated>
+        <summary type="html">
+
+&lt;div class=&quot;question-status question-originals-of-duplicate&quot;&gt;
+    &lt;p&gt;This question already has an answer here:&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;/questions/12641392/c-constant-structure-member-initialization&quot; dir=&quot;ltr&quot;&gt;C++ Constant structure member initialization&lt;/a&gt;
+                &lt;span class=&quot;question-originals-answer-count&quot;&gt;
+                    3 answers
+                &lt;/span&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+            &lt;p&gt;I&#39;ve a class &lt;code&gt;myClass&lt;/code&gt; that has a type defined in it, &lt;code&gt;myType&lt;/code&gt;, and a &lt;code&gt;static const std::map&lt;/code&gt; that uses this type. How must I initialise the member? &lt;/p&gt;
+
+&lt;p&gt;The situation is like this. The compiler tells me: &lt;code&gt;multiple definition of MyClass::myMap&lt;/code&gt;. But there is really only one definition. Is this initialisation (schematically)  correct?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class myClass
+{
+  struct myType
+  {
+    // ...
+  };
+  static const std::map&amp;lt;int, myType&amp;gt; myMap;
+};
+
+const std::map&amp;lt;int, myType&amp;gt; myClass::myMap = {
+  {1, {&quot;hello myType&quot;, 99, &quot;woops&quot;}},
+  {2, {&quot;hello again&quot;, 66, &quot;holla&quot;}},
+  {3, {&quot;and bye&quot;, 33, &quot;adios&quot;}}
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;It&#39;s not a duplicate because the &lt;code&gt;const&lt;/code&gt; members in the proposed question are not static.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Also this question: &lt;a href=&quot;http://stackoverflow.com/questions/185844/initializing-private-static-members&quot;&gt;Initializing private static members&lt;/a&gt;
+does not answer the question since the &lt;code&gt;static const&lt;/code&gt; members are &lt;code&gt;int&lt;/code&gt;&#39;s.&lt;/p&gt;
+
+        </summary>
+    </entry>
+</feed>
