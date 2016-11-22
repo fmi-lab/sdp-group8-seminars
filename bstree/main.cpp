@@ -4,8 +4,9 @@
 
 using namespace std;
 
-void printVector(const std::vector<int>& vec) {
-    for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
+template <typename T>
+void printVector(const std::vector<T>& vec) {
+    for (typename std::vector<T>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
         std::cout << *it << " ";
     }
 }
@@ -35,5 +36,18 @@ int main()
     bst.remove(10);
     cout << endl << "After removing the root: " << endl;
     bst.print();
+
+    cout << endl << "-------------------------" << endl;
+    cout << "Test tree reconstruction" << endl;
+    char preorder[] = "PSBKRJCMDE";
+    char inorder[] = "SKBPCJRDME";
+    std::vector<char> preorderVec = std::vector<char>(preorder, preorder + 10);
+    std::vector<char> inorderVec = std::vector<char>(inorder, inorder + 10);
+    BSTree<char>* reconstructed = BSTree<char>::reconstruct(inorderVec, preorderVec);
+    reconstructed->print();
+    std::vector<char> postorderVec = reconstructed->postorderTraversal();
+    cout << "Postorder traversal: ";
+    printVector(postorderVec);
+    delete reconstructed;
     return 0;
 }
