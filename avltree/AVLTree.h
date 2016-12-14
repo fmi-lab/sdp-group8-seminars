@@ -13,6 +13,10 @@ template <typename T>
 int getHeight(AVLNode<T>* node) {
     return node? node->height: 0;
 }
+template <typename T>
+int recalculateHeight(AVLNode<T>* node) {
+    return std::max(getHeight(node->left), getHeight(node->right)) + 1;
+}
 
 template <typename T>
 class AVLTree
@@ -149,15 +153,14 @@ void AVLTree<T>::remove(const T& el, AVLNode<T>*& node) {
     } else {
         remove(el, node->right);
     }
-    // премахнали сме някой наследник на node (от лявото или от дясното поддърво)
-    // трябва да го ребалансираме
+
+    // Вече сме минали през рекурсивните извиквания за remove и елементът е изтрит
+    // това значи, че височината на node може да е намаляла и трябва да я преизчислим
+    node->height = recalculateHeight(node);
+
+    // сега трябва да ребалансираме поддървото с корен в node, ако има нужда
     // това ще се случва на всяка стъпка от рекурсията, докато не стигнем корена на дървото
     balanceAfterRemove(node);
-    // накрая актуализираме височината на node, която се е променила заради премахнатия елемент
-    // TODO: THIS DOES NOT WORK CORRECTLY!
-    // the node pointer here might have changed during the rotations
-    // and the old node will be left with its old height
-    node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
 }
 
 template <typename T>
@@ -183,7 +186,12 @@ void AVLTree<T>::add(const T& el, AVLNode<T>*& node) {
         add(el, node->right);
     }
 
-    // check whether this node has become unbalanced
+    // we get to this point after we exit the recursive calls to add
+    // so at this point the new node has been added as a (grand...)child of this node
+    // and its height needs to be updated
+    node->height = recalculateHeight(node);
+
+    // now check whether this node has become unbalanced
     int balance = getHeight(node->left) - getHeight(node->right);
 
     if (balance > 1) {
@@ -208,11 +216,6 @@ void AVLTree<T>::add(const T& el, AVLNode<T>*& node) {
     } else {
          // this node is balanced - nothing to do
     }
-    // now that we have added the new child and rebalanced, recalculate this node's height
-    // TODO: THIS DOES NOT WORK CORRECTLY!
-    // the node pointer here might have changed during the rotations
-    // and the old node will be left with its old height
-    node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
 }
 
 template <typename T>
@@ -221,6 +224,9 @@ void AVLTree<T>::rightRotate(AVLNode<T>*& node) {
     node = node->left;
     currentParent->left = node->right;
     node->right = currentParent;
+    // recalculate heights of the nodes that were moved around
+    node->right->height = recalculateHeight(node->right);
+    node->height = recalculateHeight(node);
 }
 
 template <typename T>
@@ -229,6 +235,9 @@ void AVLTree<T>::leftRotate(AVLNode<T>*& node) {
     node = node->right;
     currentParent->right = node->left;
     node->left = currentParent;
+    // recalculate heights of the nodes that were moved around
+    node->left->height = recalculateHeight(node->left);
+    node->height = recalculateHeight(node);
 }
 
 template <typename T>
@@ -256,7 +265,6 @@ void AVLTree<T>::print() const {
  * Лявото поддърво се отпечатва под дясното, т.е. дървото се отпечатва завъртяно на 90 градуса,
  * обратно на часовниковата стрелка.
  * В скоби е отпечатана височината на съответния елемент в дървото.
- * NB. заради проблем с insert / delete височините на някои върхове не са правилни!
  */
 template <typename T>
 void AVLTree<T>::print(AVLNode<T>* node, int indent) const {
