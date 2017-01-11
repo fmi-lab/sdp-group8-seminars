@@ -1,0 +1,28 @@
+digraph G
+{
+	"T-shirt";
+	"T-shirt" -> "jeans"[label=""];
+	"T-shirt" -> "blouse"[label=""];
+	"blouse";
+	"blouse" -> "sweatshirt"[label=""];
+	"boots";
+	"boots" -> "coat"[label=""];
+	"coat";
+	"coat" -> "gloves"[label=""];
+	"gloves";
+	"hat";
+	"jeans";
+	"jeans" -> "boots"[label=""];
+	"leggings";
+	"leggings" -> "socks"[label=""];
+	"leggings" -> "jeans"[label=""];
+	"scarf";
+	"scarf" -> "coat"[label=""];
+	"socks";
+	"sweatshirt";
+	"sweatshirt" -> "coat"[label=""];
+	"sweatshirt" -> "scarf"[label=""];
+	"underwear";
+	"underwear" -> "leggings"[label=""];
+	"underwear" -> "T-shirt"[label=""];
+}
