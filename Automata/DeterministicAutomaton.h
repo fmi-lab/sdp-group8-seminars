@@ -29,7 +29,7 @@ class DeterministicAutomaton
 
         private:
             const DeterministicAutomaton* autref;
-            std::stack<IteratorStep> operations;
+            std::queue<IteratorStep> operations;
             bool isComplete(const IteratorStep&) const;
             void unwind();
             void expandState(const IteratorStep&);

@@ -62,16 +62,16 @@ bool DeterministicAutomaton::Iterator::isComplete(const IteratorStep& step) cons
 }
 
 void DeterministicAutomaton::Iterator::unwind() {
-    while (!operations.empty() && !isComplete(operations.top())) {
-        IteratorStep op = operations.top();
+    while (!operations.empty() && !isComplete(operations.front())) {
+        IteratorStep op = operations.front();
         operations.pop();
         expandState(op);
     }
 }
 
 std::string DeterministicAutomaton::Iterator::operator*() const {
-    assert(!operations.empty() && isComplete(operations.top()));
-    return operations.top().word;
+    assert(!operations.empty() && isComplete(operations.front()));
+    return operations.front().word;
 }
 
 bool DeterministicAutomaton::Iterator::operator !=(const Iterator& other) const {
@@ -83,7 +83,7 @@ bool DeterministicAutomaton::Iterator::operator !=(const Iterator& other) const 
         (!operations.empty() && other.operations.empty())) {
         return true;
     }
-    return operations.top() != other.operations.top();
+    return operations.front() != other.operations.front();
 }
 
 void DeterministicAutomaton::Iterator::expandState(const IteratorStep& step) {
@@ -96,7 +96,7 @@ void DeterministicAutomaton::Iterator::expandState(const IteratorStep& step) {
 }
 DeterministicAutomaton::Iterator& DeterministicAutomaton::Iterator::operator++() {
     assert(!operations.empty());
-    IteratorStep currentTop = operations.top();
+    IteratorStep currentTop = operations.front();
     operations.pop();
     expandState(currentTop);
     unwind();
