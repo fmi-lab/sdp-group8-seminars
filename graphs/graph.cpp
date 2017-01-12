@@ -19,7 +19,7 @@ public:
 	void addVertex (const VT&);
 	void addEdge (const VT&, const VT&, const LT& label=LT());
 
-    list<pair<VT,LT>> outgoingEdges (const VT&) const;
+    list<pair<VT, LT>> outgoingEdges (const VT&) const;
     list<pair<VT, LT>> incomingEdges (const VT&) const;
 
     bool topologicalSort(list<VT>&) const;
@@ -27,7 +27,7 @@ public:
 	void toDotty (ostream&) const;
 private:
 
-	map<VT,list<pair<VT,LT>>> edges;
+	map<VT,list<pair<VT, LT>>> edges;
 
 };
 
@@ -43,7 +43,7 @@ void Graph<VT, LT>::addEdge (const VT &outV, const VT &inV, const LT &lbl)
 	addVertex (outV);
 	addVertex (inV);
 
-	edges[outV].push_back (pair<VT,LT>(inV,lbl));
+	edges[outV].push_back (pair<VT, LT>(inV,lbl));
 }
 
 template <class VT, class LT>
@@ -59,11 +59,11 @@ digraph G
 */
 	out << "digraph G\n{\n";
 
-	for (const pair<VT,list<pair<VT,LT>>>& mapEl : edges)
+	for (const pair<VT, list<pair<VT, LT>>>& mapEl : edges)
 	{
 		out << "\t\"" << mapEl.first << "\";\n";
 
-		for (const pair<VT,LT> &edge : mapEl.second)
+		for (const pair<VT, LT> &edge : mapEl.second)
 		{
 			out << "\t\""
 			    << mapEl.first
@@ -80,19 +80,19 @@ digraph G
 }
 
 template <class VT, class LT>
-list<pair<VT,LT>> Graph<VT,LT>::outgoingEdges (const VT &out) const
+list<pair<VT, LT>> Graph<VT, LT>::outgoingEdges (const VT &out) const
 {
 	return edges.at(out);
 }
 
 template <class VT, class LT>
-list<pair<VT,LT>> Graph<VT,LT>::incomingEdges (const VT &out) const
+list<pair<VT, LT>> Graph<VT, LT>::incomingEdges (const VT &out) const
 {
-    list<pair<VT,LT>> result;
+    list<pair<VT, LT>> result;
     for(auto vEdges : edges) {
         for (auto edge: vEdges.second) {
             if (edge.first == out) {
-                result.push_back(pair<VT,LT>(vEdges.first, edge.second));
+                result.push_back(pair<VT, LT>(vEdges.first, edge.second));
             }
         }
     }
@@ -100,7 +100,7 @@ list<pair<VT,LT>> Graph<VT,LT>::incomingEdges (const VT &out) const
 }
 
 template <class VT, class LT>
-bool Graph<VT,LT>::topologicalSort(list<VT>& sorted) const {
+bool Graph<VT, LT>::topologicalSort(list<VT>& sorted) const {
     // опашка, в която ще слагаме подред всеки връх, който остане без входящи ребра
     queue<VT> freeVertices;
 
@@ -111,7 +111,7 @@ bool Graph<VT,LT>::topologicalSort(list<VT>& sorted) const {
     // инициализираме incomingEdgesCounts с първоначалните бройки от графа
     for(auto vEdges : edges) {
         const VT& vertex = vEdges.first;
-        list<pair<VT,LT>>& neighbours = vEdges.second;
+        list<pair<VT, LT>>& neighbours = vEdges.second;
         // инициализираме incomingEdgesCount[vertex] на 0, ако все още няма стойност
         incomingEdgesCounts[vertex];
         for (auto edge: neighbours) {
